@@ -1,5 +1,25 @@
 <script>
-    export let promise;
+	export let promise;
+	export let fullName;
+	export let CreatedWhen = 0;
+	$: {
+		if (promise[0]) {
+			const date = new Date(promise[0].created)
+			CreatedWhen = date.getDate()+
+			"/"+(date.getMonth()+1)+
+			"/"+date.getFullYear()+" at"+
+			" "+date.getHours()+
+			":"+date.getMinutes()
+		}
+	}
+	// afterUpdate(()=>{
+
+	// })
+	// var unixTimestamp = 62678980
+	// var date = new Date(unixTimestamp*1000);
+	// console.log("Unix Timestamp:",unixTimestamp)
+	// console.log("Date Timestamp:",date.getTime())
+	// console.log(date)
 </script>
 
 <div class="grid grid-cols-5 h-full">
@@ -15,7 +35,7 @@
 					{item.title}
 				</div>
 				<div class="text-md">
-					Created by <i>{item.created_by}</i> on {item.created}
+					Created by <i>{fullName}</i> on {CreatedWhen}
 				</div>
 	
 				<div>

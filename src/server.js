@@ -3,16 +3,39 @@ const express = require('express');
 import compression from 'compression';
 import * as sapper from '@sapper/server';
 const crypto = require('crypto');
+import { json } from 'body-parser';
+import session from 'express-session';
+import sessionFileStore from 'session-file-store';
 
 const { PORT, NODE_ENV } = process.env;
 const dev = NODE_ENV === 'development';
 const nonce = crypto.randomBytes(16).toString('hex');
 
+const FileStore = new sessionFileStore(session);
+import { secret_key} from '../config';
+
 express()
 	.use(
+		json(),
+			session({
+				secret: secret_key,
+				resave: true,
+				saveUninitialized: true,
+				cookie: {
+					maxAge: 31536000
+				},
+				store: new FileStore({
+					path: `.sessions`
+			})
+		}),
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
-		sapper.middleware()
+		sapper.middleware({
+			session: (req, res) => {
+			  return ({
+				token: req.session.token
+			  })}
+			})
 	)
 	.listen(PORT, err => {
 		if (err) console.log('error', err);

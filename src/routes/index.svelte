@@ -1,11 +1,17 @@
+<script context="module">
+	export function preload(page, session) {
+	  console.log(session);
+	}
+  </script>
+  
 <script>
 	import axios from 'axios';
 
-	const localAPIURL = 'http://localhost:8080';
+	import {api_url} from '../../config';
 
 	let promise = [];
 	async function getObjects(){
-		axios.get(`${localAPIURL}/api/recipe`,{
+		axios.get(`${api_url}/recipe`,{
 			method: 'get',
 			credentials: 'same-origin',
 		}).then((resp) => {
@@ -27,7 +33,7 @@
     	<p>awaiting...</p>
 	{:then promise}
 		{#each promise as item}
-			<a href="/r/{item._id}">
+			<a href="/r/{item.id}">
 				{item.title}
 			</a>
 			<br>
