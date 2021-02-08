@@ -1,5 +1,5 @@
 import fetch from "node-fetch";
-import {api_url} from '../../config';
+import { api_url } from "../../config";
 const headers = {
   "Content-Type": "application/json",
   Accept: "application/json",
@@ -14,7 +14,7 @@ export async function post(req, res) {
       headers,
       body: JSON.stringify({ email, password }),
     });
-    console.log(result)
+    console.log(result);
     const parsed = await result.json();
 
     if (typeof parsed.error !== "undefined") {
