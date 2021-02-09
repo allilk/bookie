@@ -1,5 +1,8 @@
 <script>
   export let segment;
+  import { stores } from "@sapper/app";
+  const { session } = stores();
+  
 </script>
 
 <nav>
@@ -7,8 +10,13 @@
     <li>
       <a aria-current={segment === undefined ? "page" : undefined} href="."
         >home</a
-      >
-    </li>
+	  >
+	</li>
+	{#if $session.token}
+		<li>
+			<a aria-current={segment === undefined ? "page" : undefined} href="/logout">Log Out</a>
+		</li>
+	{/if}
   </ul>
 </nav>
 

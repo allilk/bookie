@@ -7,6 +7,9 @@
 </script>
 
 <script>
+  import { stores } from "@sapper/app";
+  const { session } = stores();
+
   import { onMount } from "svelte";
 
   export let recipe_id;
@@ -33,12 +36,10 @@
     promise = await getObjects();
     const getUser = async () => {
       const userId = promise[0].created_by;
-      const resp = await fetch(`${localAPIURL}/api/profile/get`, {
+      const resp = await fetch(`${api_url}/profile/get`, {
         method: "POST",
         headers: {
           "content-type": "application/x-www-form-urlencoded",
-          Authorization:
-            "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RAdGVzdC5jb20iLCJmdWxsTmFtZSI6InRlc3QiLCJfaWQiOiI2MDIwOGU3MzZjY2NmZTRkZGNmZjc4ZTIiLCJpYXQiOjE2MTI3NDY3Mjh9.dY2iCJju6_vzDKo5ULJ-W4XJNxg6W6CCWllOALSPbTE",
         },
         body: new URLSearchParams({
           userid: userId,
