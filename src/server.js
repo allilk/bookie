@@ -18,11 +18,13 @@ express()
   .use(
     json(),
     session({
-      secret: secret_key,
+	  name: 'milkbook',
+	  secret: secret_key,
+	  secure: true,
       resave: true,
       saveUninitialized: true,
       cookie: {
-        maxAge: 31536000,
+		sameSite: 'strict'
       },
       store: new FileStore({
         path: `.sessions`,

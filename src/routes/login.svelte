@@ -22,6 +22,7 @@
       error = parsed.error;
     } else {
       $session.token = parsed.token;
+      // console.log($session.token)
       goto("/");
     }
   };

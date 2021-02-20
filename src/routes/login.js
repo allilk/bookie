@@ -22,6 +22,7 @@ export async function post(req, res) {
     }
 
     req.session.token = parsed.token;
+    req.session.cookie.expires = new Date(Date.now() + 3600000)
     res.end(JSON.stringify({ token: parsed.token }));
   } catch (error) {
     res.end(JSON.stringify({ error: error.message }));
